@@ -12,8 +12,9 @@ import com.android.volley.toolbox.Volley;
 
 public class Application extends android.app.Application{
 
+   public static String AppCurrency = "GHS";
 
-
+   public static String AppOrganization = "";
 
 
     private static Application mInstance;

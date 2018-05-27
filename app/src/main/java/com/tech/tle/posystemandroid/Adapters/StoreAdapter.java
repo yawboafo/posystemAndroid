@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.tech.tle.posystemandroid.Application;
 import com.tech.tle.posystemandroid.Models.Product;
 import com.tech.tle.posystemandroid.R;
 
@@ -54,7 +55,7 @@ import java.util.List;
         public void onBindViewHolder(MyViewHolder holder, final int position) {
             final Product product = productList.get(position);
             holder.name.setText(product.getName());
-            holder.price.setText(""+product.getUnitPrice());
+            holder.price.setText(Application.AppCurrency+" "+product.getUnitPrice());
 
             Glide.with(context)
                     .load(product.getImageUrl())
