@@ -26,7 +26,7 @@ import java.util.List;
         private List<Product> productList;
 
         public class MyViewHolder extends RecyclerView.ViewHolder {
-            public TextView name, price;
+            public TextView name, price,time;
             public ImageView thumbnail;
 
             public MyViewHolder(View view) {
@@ -34,6 +34,7 @@ import java.util.List;
                 name = view.findViewById(R.id.title);
                 price = view.findViewById(R.id.price);
                 thumbnail = view.findViewById(R.id.thumbnail);
+                time = view.findViewById(R.id.time);
             }
         }
 
@@ -56,7 +57,7 @@ import java.util.List;
             final Product product = productList.get(position);
             holder.name.setText(product.getName());
             holder.price.setText(Application.AppCurrency+" "+product.getUnitPrice());
-
+             holder.time.setText(product.getDatecreated());
             Glide.with(context)
                     .load(product.getImageUrl())
                     .into(holder.thumbnail);
