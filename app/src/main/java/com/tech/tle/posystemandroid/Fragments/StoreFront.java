@@ -24,6 +24,7 @@ import com.tech.tle.posystemandroid.Adapters.StoreAdapter;
 import com.tech.tle.posystemandroid.Application;
 import com.tech.tle.posystemandroid.Helper.GridSpacingItemDecoration;
 import com.tech.tle.posystemandroid.Http.APirequest;
+import com.tech.tle.posystemandroid.HttpModels.ProductResponse;
 import com.tech.tle.posystemandroid.Models.Product;
 import com.tech.tle.posystemandroid.R;
 
@@ -165,11 +166,15 @@ public class StoreFront extends Fragment {
 
                         Log.e(TAG, "response " + response.toString());
 
-                        List<Product> items = new Gson().fromJson(response.toString(), new TypeToken<List<Product>>() {
+                       // List<Product> items = new Gson().fromJson(response.toString(), new TypeToken<List<Product>>() {
+                        //}.getType());
+
+
+                        ProductResponse productResponse = new Gson().fromJson(response.toString(), new TypeToken<ProductResponse>() {
                         }.getType());
 
                         itemsList.clear();
-                        itemsList.addAll(items);
+                        itemsList.addAll(productResponse.getData());
 
 
                         Log.e(TAG, "itemsList.count: " + itemsList.size());
