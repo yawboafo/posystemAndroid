@@ -8,145 +8,142 @@ public class Product {
 
 
 
-    private int productID;
-    private String sKU;
-    private String iDSKU;
-    private String name;
-    private String description;
-    private int quantity;
-    private int unitPrice;
-    private String discount;
-    private String isAvailable;
-    private String ranking;
-    private String datecreated;
-    private String dateUpdated;
-    private String imageUrl;
-    private int categoryID;
-    private int organizationId;
+    private int ProductID;
+    private String SKU;
+    private String IDSKU;
+    private String Name;
+    private String Description;
+    private int Quantity;
+    private int UnitPrice;
+    private String Discount;
+    private String IsAvailable;
+    private String Ranking;
+    private String Datecreated;
+    private String DateUpdated;
+    private String ImageUrl;
+    private int CategoryID;
+    private int Organization_id;
 
 
     public int getProductID() {
-        return productID;
+        return ProductID;
     }
 
     public void setProductID(int productID) {
-        this.productID = productID;
+        ProductID = productID;
     }
 
     public String getSKU() {
-        return sKU;
+        return SKU;
     }
 
-    public void setSKU(String sKU) {
-        this.sKU = sKU;
+    public void setSKU(String SKU) {
+        this.SKU = SKU;
     }
 
     public String getIDSKU() {
-        return iDSKU;
+        return IDSKU;
     }
 
-    public void setIDSKU(String iDSKU) {
-        this.iDSKU = iDSKU;
+    public void setIDSKU(String IDSKU) {
+        this.IDSKU = IDSKU;
     }
 
     public String getName() {
-        return name;
+        return Name;
     }
 
     public void setName(String name) {
-        this.name = name;
+        Name = name;
     }
 
     public String getDescription() {
-        return description;
+        return Description;
     }
 
     public void setDescription(String description) {
-        this.description = description;
+        Description = description;
     }
 
     public int getQuantity() {
-        return quantity;
+        return Quantity;
     }
 
     public void setQuantity(int quantity) {
-        this.quantity = quantity;
+        Quantity = quantity;
     }
 
     public int getUnitPrice() {
-        return unitPrice;
+        return UnitPrice;
     }
 
     public void setUnitPrice(int unitPrice) {
-        this.unitPrice = unitPrice;
+        UnitPrice = unitPrice;
     }
 
     public String getDiscount() {
-        return discount;
+        return Discount;
     }
 
     public void setDiscount(String discount) {
-        this.discount = discount;
+        Discount = discount;
     }
 
     public String getIsAvailable() {
-        return isAvailable;
+        return IsAvailable;
     }
 
     public void setIsAvailable(String isAvailable) {
-        this.isAvailable = isAvailable;
+        IsAvailable = isAvailable;
     }
 
     public String getRanking() {
-        return ranking;
+        return Ranking;
     }
 
     public void setRanking(String ranking) {
-        this.ranking = ranking;
+        Ranking = ranking;
     }
 
     public String getDatecreated() {
-        return datecreated;
+        return Datecreated;
     }
 
     public void setDatecreated(String datecreated) {
-        this.datecreated = datecreated;
+        Datecreated = datecreated;
     }
 
     public String getDateUpdated() {
-        return dateUpdated;
+        return DateUpdated;
     }
 
     public void setDateUpdated(String dateUpdated) {
-        this.dateUpdated = dateUpdated;
+        DateUpdated = dateUpdated;
     }
 
     public String getImageUrl() {
-        return imageUrl;
+        return ImageUrl;
     }
 
     public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
+        ImageUrl = imageUrl;
     }
 
     public int getCategoryID() {
-        return categoryID;
+        return CategoryID;
     }
 
     public void setCategoryID(int categoryID) {
-        this.categoryID = categoryID;
+        CategoryID = categoryID;
     }
 
-    public int getOrganizationId() {
-        return organizationId;
+    public int getOrganization_id() {
+        return Organization_id;
     }
 
-    public void setOrganizationId(int organizationId) {
-        this.organizationId = organizationId;
+    public void setOrganization_id(int organization_id) {
+        Organization_id = organization_id;
     }
-
-
-
 }
 
 

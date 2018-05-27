@@ -54,7 +54,7 @@ import java.util.List;
         public void onBindViewHolder(MyViewHolder holder, final int position) {
             final Product product = productList.get(position);
             holder.name.setText(product.getName());
-            holder.price.setText(product.getUnitPrice());
+            holder.price.setText(""+product.getUnitPrice());
 
             Glide.with(context)
                     .load(product.getImageUrl())

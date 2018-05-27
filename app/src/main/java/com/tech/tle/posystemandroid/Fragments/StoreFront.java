@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
@@ -164,13 +165,13 @@ public class StoreFront extends Fragment {
 
 
 
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, APirequest.getProductURL, null,
+                new Response.Listener<JSONObject>()
+                {
 
-
-        JsonObjectRequest request = new JsonObjectRequest(APirequest.getProductURL, new JSONObject(),
-
-                new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
+                        // display response
                         if (response == null) {
                             Toast.makeText(getActivity(), "Couldn't fetch the store items! Pleas try again.", Toast.LENGTH_LONG).show();
                             return;
@@ -189,18 +190,25 @@ public class StoreFront extends Fragment {
                         itemsList.addAll(productResponse.getData());
 
 
-                        Log.e(TAG, "itemsList.count: " + itemsList.size());
+                        Log.e(TAG, "itemsList.count: " + itemsList.size()  +""+productResponse.getData().get(0).getName());
                         // refreshing recycler view
                         mAdapter.notifyDataSetChanged();
                     }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                // error in getting json
-                Log.e(TAG, "Error: " + error.getMessage());
-                Toast.makeText(getActivity(), "Error: " + error.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });
+                },
+                new Response.ErrorListener()
+                {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // error in getting json
+                        Log.e(TAG, "Error: " + error.getMessage());
+                        Toast.makeText(getActivity(), "Error: " + error.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                }
+        );
+
+
+
+
 
 
 
