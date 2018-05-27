@@ -1,7 +1,9 @@
 package com.tech.tle.posystemandroid.Adapters;
 
 import android.content.Context;
+
 import android.support.v7.widget.RecyclerView;
+import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +15,10 @@ import com.tech.tle.posystemandroid.Application;
 import com.tech.tle.posystemandroid.Models.Product;
 import com.tech.tle.posystemandroid.R;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -26,7 +32,7 @@ import java.util.List;
         private List<Product> productList;
 
         public class MyViewHolder extends RecyclerView.ViewHolder {
-            public TextView name, price;
+            public TextView name, price,time;
             public ImageView thumbnail;
 
             public MyViewHolder(View view) {
@@ -34,6 +40,7 @@ import java.util.List;
                 name = view.findViewById(R.id.title);
                 price = view.findViewById(R.id.price);
                 thumbnail = view.findViewById(R.id.thumbnail);
+                time = view.findViewById(R.id.time);
             }
         }
 
@@ -53,10 +60,21 @@ import java.util.List;
 
         @Override
         public void onBindViewHolder(MyViewHolder holder, final int position) {
+
+            final SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
             final Product product = productList.get(position);
             holder.name.setText(product.getName());
             holder.price.setText(Application.AppCurrency+" "+product.getUnitPrice());
 
+            String dateStr = product.getDatecreated();
+            Date date = null;
+            try {
+                date = inputFormat.parse(dateStr);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            String niceDateStr = DateUtils.getRelativeTimeSpanString(date.getTime() , Calendar.getInstance().getTimeInMillis(), DateUtils.MINUTE_IN_MILLIS).toString();
+             holder.time.setText(niceDateStr);
             Glide.with(context)
                     .load(product.getImageUrl())
                     .into(holder.thumbnail);
