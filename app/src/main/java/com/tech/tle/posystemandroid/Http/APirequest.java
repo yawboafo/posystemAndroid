@@ -15,6 +15,10 @@ import com.tech.tle.posystemandroid.Application;
 public class APirequest {
 
 
+   public static final String BASEURL = "https://posystemapi.herokuapp.com/";
+   public static String getProductURL = APirequest.BASEURL + "getAllProducts";
+
+
     public static final String TAG = Application.class
             .getSimpleName();
     private RequestQueue mRequestQueue;
