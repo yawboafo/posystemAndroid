@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.google.gson.Gson;
@@ -30,6 +31,10 @@ import com.tech.tle.posystemandroid.Models.Product;
 import com.tech.tle.posystemandroid.R;
 
 import org.json.JSONArray;
+<<<<<<< HEAD
+=======
+import org.json.JSONException;
+>>>>>>> 744fb8e364e05455c16b0b6327b4019dbd7484b4
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -157,7 +162,13 @@ public class StoreFront extends Fragment {
 
 
     private void fetchStoreItems() {
-        JsonObjectRequest request = new JsonObjectRequest(APirequest.getProductURL,
+
+
+
+
+
+        JsonObjectRequest request = new JsonObjectRequest(APirequest.getProductURL, new JSONObject(),
+
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
@@ -168,7 +179,7 @@ public class StoreFront extends Fragment {
 
                         Log.e(TAG, "response " + response.toString());
 
-                       // List<Product> items = new Gson().fromJson(response.toString(), new TypeToken<List<Product>>() {
+                        // List<Product> items = new Gson().fromJson(response.toString(), new TypeToken<List<Product>>() {
                         //}.getType());
 
 
@@ -193,7 +204,7 @@ public class StoreFront extends Fragment {
         });
 
 
-        JsonObjectRequest request1 = new JsonObjectRequest(APirequest.getProductURL,new Response.Listener<JSONObject>())
+
 
         aPirequest.addToRequestQueue(request);
     }
