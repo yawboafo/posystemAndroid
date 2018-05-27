@@ -17,7 +17,9 @@ import android.widget.Toast;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.tech.tle.posystemandroid.Adapters.StoreAdapter;
@@ -29,6 +31,8 @@ import com.tech.tle.posystemandroid.Models.Product;
 import com.tech.tle.posystemandroid.R;
 
 import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -156,10 +160,14 @@ public class StoreFront extends Fragment {
 
 
     private void fetchStoreItems() {
-        JsonArrayRequest request = new JsonArrayRequest(APirequest.getProductURL,
-                new Response.Listener<JSONArray>() {
+
+
+
+
+        JsonObjectRequest request = new JsonObjectRequest(APirequest.getProductURL, new JSONObject(),
+                new Response.Listener<JSONObject>() {
                     @Override
-                    public void onResponse(JSONArray response) {
+                    public void onResponse(JSONObject response) {
                         if (response == null) {
                             Toast.makeText(getActivity(), "Couldn't fetch the store items! Pleas try again.", Toast.LENGTH_LONG).show();
                             return;
@@ -167,7 +175,7 @@ public class StoreFront extends Fragment {
 
                         Log.e(TAG, "response " + response.toString());
 
-                       // List<Product> items = new Gson().fromJson(response.toString(), new TypeToken<List<Product>>() {
+                        // List<Product> items = new Gson().fromJson(response.toString(), new TypeToken<List<Product>>() {
                         //}.getType());
 
 
@@ -190,6 +198,8 @@ public class StoreFront extends Fragment {
                 Toast.makeText(getActivity(), "Error: " + error.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+
+
 
         aPirequest.addToRequestQueue(request);
     }
