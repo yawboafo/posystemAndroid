@@ -31,10 +31,9 @@ import com.tech.tle.posystemandroid.Models.Product;
 import com.tech.tle.posystemandroid.R;
 
 import org.json.JSONArray;
-<<<<<<< HEAD
-=======
+
 import org.json.JSONException;
->>>>>>> 744fb8e364e05455c16b0b6327b4019dbd7484b4
+
 import org.json.JSONObject;
 
 import java.util.ArrayList;
