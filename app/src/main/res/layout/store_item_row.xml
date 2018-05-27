@@ -23,6 +23,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/card_cover_height"
                 android:background="?attr/selectableItemBackgroundBorderless"
+                android:adjustViewBounds="true"
                 android:clickable="true"
                 android:scaleType="fitXY" />
 
@@ -36,8 +37,8 @@
                 android:paddingLeft="@dimen/card_title_padding"
                 android:paddingRight="@dimen/card_title_padding"
                 android:paddingTop="@dimen/card_title_padding"
-                android:textColor="#111"
-                android:textSize="11dp" />
+                android:textColor="@color/secondary_text"
+                android:textSize="14dp" />
 
             <TextView
                 android:id="@+id/price"
@@ -45,12 +46,11 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/title"
                 android:lines="1"
-
                 android:paddingLeft="@dimen/card_title_padding"
                 android:paddingRight="@dimen/card_title_padding"
-                android:textColor="#111"
-                android:textSize="11dp"
-                android:textStyle="bold" />
+                android:textColor="@color/primary_light"
+                android:textSize="12dp"
+                />
 
             <TextView
 

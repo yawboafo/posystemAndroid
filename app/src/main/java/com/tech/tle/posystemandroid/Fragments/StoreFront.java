@@ -18,29 +18,22 @@ import android.widget.Toast;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.VolleyLog;
-import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.tech.tle.posystemandroid.Adapters.StoreAdapter;
-import com.tech.tle.posystemandroid.Application;
 import com.tech.tle.posystemandroid.Helper.GridSpacingItemDecoration;
-import com.tech.tle.posystemandroid.Http.APirequest;
+
+import com.tech.tle.posystemandroid.Http.APIRequest;
 import com.tech.tle.posystemandroid.HttpModels.ProductResponse;
 import com.tech.tle.posystemandroid.Models.Product;
 import com.tech.tle.posystemandroid.R;
-
-import org.json.JSONArray;
-
-import org.json.JSONException;
 
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.android.volley.VolleyLog.TAG;
 import static com.tech.tle.posystemandroid.Helper.ViewUtils.dpToPx;
 
 
@@ -53,7 +46,7 @@ public class StoreFront extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    private APirequest aPirequest;
+    private APIRequest apiRequest;
 
 
 
@@ -90,7 +83,7 @@ public class StoreFront extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-        aPirequest = new APirequest();
+        apiRequest = new APIRequest();
 
     }
 
@@ -165,7 +158,7 @@ public class StoreFront extends Fragment {
 
 
 
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, APirequest.getProductURL, null,
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, APIRequest.getProductURL, null,
                 new Response.Listener<JSONObject>()
                 {
 
@@ -190,7 +183,7 @@ public class StoreFront extends Fragment {
                         itemsList.addAll(productResponse.getData());
 
 
-                        Log.e(TAG, "itemsList.count: " + itemsList.size()  +""+productResponse.getData().get(0).getName());
+                        Log.e(TAG, "itemsList.count: " + itemsList.size()  +" "+ productResponse.getData().get(0).getName());
                         // refreshing recycler view
                         mAdapter.notifyDataSetChanged();
                     }
@@ -213,6 +206,6 @@ public class StoreFront extends Fragment {
 
 
 
-        aPirequest.addToRequestQueue(request);
+        apiRequest.addToRequestQueue(request);
     }
 }

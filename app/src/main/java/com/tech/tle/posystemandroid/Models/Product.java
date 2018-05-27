@@ -1,9 +1,13 @@
 package com.tech.tle.posystemandroid.Models;
 
+import android.arch.persistence.room.Entity;
+
 /**
  * Created by nykbMac on 26/05/2018.
  */
 
+
+@Entity
 public class Product {
 
 

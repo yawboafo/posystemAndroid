@@ -53,11 +53,7 @@ public class MainActivity extends AppCompatActivity implements StoreFront.OnFrag
                     fragment = new StoreFront();
                     loadFragment(fragment);
                     return true;
-                case R.id.navigation_gifts:
-                    toolbar.setTitle("My Gifts");
-                    fragment = new StoreFront();
-                    loadFragment(fragment);
-                    return true;
+
                 case R.id.navigation_cart:
                     toolbar.setTitle("Cart");
                     fragment = new StoreFront();

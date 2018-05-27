@@ -12,11 +12,11 @@ import com.tech.tle.posystemandroid.Application;
  * Created by nykbMac on 26/05/2018.
  */
 
-public class APirequest {
+public class APIRequest {
 
 
    public static final String BASEURL = "https://posystemapi.herokuapp.com/";
-   public static String getProductURL = APirequest.BASEURL + "getAllProducts";
+   public static String getProductURL = APIRequest.BASEURL + "getAllProducts";
 
 
     public static final String TAG = Application.class
