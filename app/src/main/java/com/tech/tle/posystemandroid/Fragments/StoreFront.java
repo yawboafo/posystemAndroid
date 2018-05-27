@@ -51,8 +51,7 @@ public class StoreFront extends Fragment {
 
     private static final String TAG = StoreFront.class.getSimpleName();
 
-    // url to fetch shopping items
-    private static final String URL = "https://api.androidhive.info/json/movies_2017.json";
+
 
     private RecyclerView recyclerView;
     private List<Product> itemsList;
