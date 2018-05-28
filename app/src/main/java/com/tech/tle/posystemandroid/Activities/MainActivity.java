@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity implements StoreFront.OnFrag
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
-            Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.container);
+            Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.frame_container);
 
             Fragment fragment;
             switch (item.getItemId()) {
@@ -58,6 +58,9 @@ public class MainActivity extends AppCompatActivity implements StoreFront.OnFrag
                         fragment = new StoreFront();
                         loadFragment(fragment);
                     }
+
+
+
 
 
                     return true;

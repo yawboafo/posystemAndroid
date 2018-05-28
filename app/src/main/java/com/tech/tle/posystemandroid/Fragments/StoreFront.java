@@ -191,10 +191,9 @@ public class StoreFront extends Fragment {
                             return;
                         }
 
-                        Log.e(TAG, "response " + response.toString());
+                        Log.d(TAG, "response " + response.toString());
 
-                        // List<Product> items = new Gson().fromJson(response.toString(), new TypeToken<List<Product>>() {
-                        //}.getType());
+
 
 
                         ProductResponse productResponse = new Gson().fromJson(response.toString(), new TypeToken<ProductResponse>() {
@@ -203,10 +202,10 @@ public class StoreFront extends Fragment {
                         itemsList.clear();
                         itemsList.addAll(productResponse.getData());
 
-                    //    insertProduct(productResponse.getData());
+
 
                              new InsertProductAsync(productResponse.getData()).execute();
-                        Log.e(TAG, "itemsList.count: " + itemsList.size()  +" "+ productResponse.getData().get(0).getName());
+                        Log.d(TAG, "itemsList.count: " + itemsList.size()  +" "+ productResponse.getData().get(0).getName());
                         // refreshing recycler view
                         mAdapter.notifyDataSetChanged();
                     }
@@ -303,4 +302,52 @@ public class StoreFront extends Fragment {
         }
     }
 
+
+    class getAllProductAsync extends AsyncTask<Void, Void, Void>
+    {
+
+        List<Product> products;
+
+        AppDatabase db = AppDatabase.getAppDatabase(getActivity());
+
+        String TAG = getClass().getSimpleName();
+
+        protected void onPreExecute (){
+            super.onPreExecute();
+
+        }
+
+        protected Void doInBackground(Void... unused) {
+
+            products = db.getProductDao().getAllProducts();
+            return null;
+        }
+
+        protected void onProgressUpdate(Integer...a){
+
+        }
+
+        protected void onPostExecute(Void result) {
+
+            if (products.size() <= 0){
+
+                fetchStoreItems();
+            }else{
+
+                itemsList.clear();
+                itemsList.addAll(products);
+                mAdapter.notifyDataSetChanged();
+            }
+
+
+
+
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        AppDatabase.destroyInstance();
+    }
 }
