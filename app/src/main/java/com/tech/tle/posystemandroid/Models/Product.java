@@ -1,6 +1,7 @@
 package com.tech.tle.posystemandroid.Models;
 
 import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.PrimaryKey;
 
 /**
  * Created by nykbMac on 26/05/2018.
@@ -12,6 +13,7 @@ public class Product {
 
 
 
+    @PrimaryKey
     private int ProductID;
     private String SKU;
     private String IDSKU;

@@ -2,6 +2,7 @@ package com.tech.tle.posystemandroid.Fragments;
 
 import android.content.Context;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -22,11 +23,14 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.tech.tle.posystemandroid.Adapters.StoreAdapter;
+import com.tech.tle.posystemandroid.AppDatabase;
 import com.tech.tle.posystemandroid.Helper.GridSpacingItemDecoration;
+
 
 import com.tech.tle.posystemandroid.Http.APIRequest;
 import com.tech.tle.posystemandroid.HttpModels.ProductResponse;
 import com.tech.tle.posystemandroid.Models.Product;
+import com.tech.tle.posystemandroid.ModelsDAO.ProductDao;
 import com.tech.tle.posystemandroid.R;
 
 import org.json.JSONObject;
@@ -182,7 +186,9 @@ public class StoreFront extends Fragment {
                         itemsList.clear();
                         itemsList.addAll(productResponse.getData());
 
+                    //    insertProduct(productResponse.getData());
 
+                             new InsertProductAsync(productResponse.getData()).execute();
                         Log.e(TAG, "itemsList.count: " + itemsList.size()  +" "+ productResponse.getData().get(0).getName());
                         // refreshing recycler view
                         mAdapter.notifyDataSetChanged();
@@ -208,4 +214,76 @@ public class StoreFront extends Fragment {
 
         apiRequest.addToRequestQueue(request);
     }
+
+
+    private void insertProduct(List<Product> products){
+
+        AppDatabase db = AppDatabase.getAppDatabase(getActivity());
+
+        for (Product product : products){
+
+
+
+
+            Product product1 = db.getProductDao().findProductByIDNow(product.getProductID());
+
+            if (product1 == null)
+                db.getProductDao().insert(product);
+             else
+                db.getProductDao().update(product);
+        }
+
+      /**  new AsyncTask<Void, Void, Void>() {
+            protected void onPreExecute() {
+                // Pre Code
+            }
+            protected Void doInBackground(Void... unused) {
+
+
+
+
+                return null;
+            }
+            protected void onPostExecute(Void unused) {
+                // Post Code
+            }
+        }.execute();
+***/
+
+    }
+
+    class InsertProductAsync extends AsyncTask<Void, Void, Void>
+    {
+
+        List<Product> products;
+
+        InsertProductAsync(List<Product> products){
+
+            this.products = products;
+
+        }
+
+        String TAG = getClass().getSimpleName();
+
+        protected void onPreExecute (){
+            super.onPreExecute();
+
+        }
+
+        protected Void doInBackground(Void... unused) {
+
+            insertProduct(products);
+            return null;
+        }
+
+        protected void onProgressUpdate(Integer...a){
+
+        }
+
+        protected void onPostExecute(Void result) {
+
+
+        }
+    }
+
 }

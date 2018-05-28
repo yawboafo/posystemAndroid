@@ -4,6 +4,7 @@ package com.tech.tle.posystemandroid;
  * Created by nykbMac on 26/05/2018.
  */
 
+import android.arch.persistence.room.Room;
 import android.text.TextUtils;
 
 import com.android.volley.Request;
@@ -23,6 +24,9 @@ public class Application extends android.app.Application{
     public void onCreate() {
         super.onCreate();
         mInstance = this;
+
+
+
     }
 
     public static synchronized Application getInstance() {
