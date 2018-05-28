@@ -34,7 +34,6 @@ import com.tech.tle.posystemandroid.Helper.RecyclerTouchListener;
 import com.tech.tle.posystemandroid.Http.APIRequest;
 import com.tech.tle.posystemandroid.HttpModels.ProductResponse;
 import com.tech.tle.posystemandroid.Models.Product;
-import com.tech.tle.posystemandroid.ModelsDAO.ProductDao;
 import com.tech.tle.posystemandroid.R;
 
 import org.json.JSONObject;
@@ -45,7 +44,7 @@ import java.util.List;
 import static com.tech.tle.posystemandroid.Helper.ViewUtils.dpToPx;
 
 
-public class StoreFront extends Fragment {
+public class StoreFrontFragment extends Fragment {
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -58,7 +57,7 @@ public class StoreFront extends Fragment {
 
 
 
-    private static final String TAG = StoreFront.class.getSimpleName();
+    private static final String TAG = StoreFrontFragment.class.getSimpleName();
 
 
 
@@ -70,13 +69,13 @@ public class StoreFront extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    public StoreFront() {
+    public StoreFrontFragment() {
         // Required empty public constructor
     }
 
 
-    public static StoreFront newInstance(String param1, String param2) {
-        StoreFront fragment = new StoreFront();
+    public static StoreFrontFragment newInstance(String param1, String param2) {
+        StoreFrontFragment fragment = new StoreFrontFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -101,6 +100,9 @@ public class StoreFront extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         //fetchStoreItems();
+
+
+
     }
 
     @Override
@@ -136,7 +138,7 @@ public class StoreFront extends Fragment {
             }
         }));
 
-        fetchStoreItems();
+        new getAllProductAsync().execute();
 
         return view;
     }
@@ -183,6 +185,10 @@ public class StoreFront extends Fragment {
                 new Response.Listener<JSONObject>()
                 {
 
+
+
+
+
                     @Override
                     public void onResponse(JSONObject response) {
                         // display response
@@ -201,12 +207,9 @@ public class StoreFront extends Fragment {
 
                         itemsList.clear();
                         itemsList.addAll(productResponse.getData());
-
-
-
-                             new InsertProductAsync(productResponse.getData()).execute();
+                        new InsertProductAsync(productResponse.getData()).execute();
                         Log.d(TAG, "itemsList.count: " + itemsList.size()  +" "+ productResponse.getData().get(0).getName());
-                        // refreshing recycler view
+
                         mAdapter.notifyDataSetChanged();
                     }
                 },

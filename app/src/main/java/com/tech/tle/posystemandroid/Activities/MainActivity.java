@@ -11,14 +11,19 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
-import com.tech.tle.posystemandroid.Fragments.StoreFront;
+import com.tech.tle.posystemandroid.Fragments.CartFragment;
+import com.tech.tle.posystemandroid.Fragments.ProfileFragment;
+import com.tech.tle.posystemandroid.Fragments.StoreFrontFragment;
 import com.tech.tle.posystemandroid.R;
 
 
 import com.tech.tle.posystemandroid.Helper.BottomNavigationBehavior;
 
 
-public class MainActivity extends AppCompatActivity implements StoreFront.OnFragmentInteractionListener{
+public class MainActivity extends AppCompatActivity implements
+        StoreFrontFragment.OnFragmentInteractionListener,
+        ProfileFragment.OnFragmentInteractionListener,
+        CartFragment.OnFragmentInteractionListener{
 
     private ActionBar toolbar;
 
@@ -38,7 +43,7 @@ public class MainActivity extends AppCompatActivity implements StoreFront.OnFrag
 
         // load the store fragment by default
         toolbar.setTitle("Store Front");
-        loadFragment(new StoreFront());
+        loadFragment(new StoreFrontFragment());
     }
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -54,8 +59,8 @@ public class MainActivity extends AppCompatActivity implements StoreFront.OnFrag
                 case R.id.navigation_shop:
                     toolbar.setTitle("Store Front");
 
-                    if (!(currentFragment instanceof StoreFront)) {
-                        fragment = new StoreFront();
+                    if (!(currentFragment instanceof StoreFrontFragment)) {
+                        fragment = new StoreFrontFragment();
                         loadFragment(fragment);
                     }
 
@@ -67,13 +72,17 @@ public class MainActivity extends AppCompatActivity implements StoreFront.OnFrag
 
                 case R.id.navigation_cart:
                     toolbar.setTitle("Cart");
-                    fragment = new StoreFront();
-                    loadFragment(fragment);
+                    if (!(currentFragment instanceof CartFragment)) {
+                        fragment = new CartFragment();
+                        loadFragment(fragment);
+                    }
                     return true;
                 case R.id.navigation_profile:
                     toolbar.setTitle("Profile");
-                    fragment = new StoreFront();
-                    loadFragment(fragment);
+                    if (!(currentFragment instanceof ProfileFragment)) {
+                        fragment = new ProfileFragment();
+                        loadFragment(fragment);
+                    }
                     return true;
             }
 
