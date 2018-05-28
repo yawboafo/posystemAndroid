@@ -61,7 +61,9 @@ import java.util.List;
         @Override
         public void onBindViewHolder(MyViewHolder holder, final int position) {
 
+
             final SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS");
+
             final Product product = productList.get(position);
             holder.name.setText(product.getName());
             holder.price.setText(Application.AppCurrency+" "+product.getUnitPrice());
