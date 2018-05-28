@@ -46,12 +46,20 @@ public class MainActivity extends AppCompatActivity implements StoreFront.OnFrag
 
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
+            Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.container);
+
             Fragment fragment;
             switch (item.getItemId()) {
                 case R.id.navigation_shop:
                     toolbar.setTitle("Store Front");
-                    fragment = new StoreFront();
-                    loadFragment(fragment);
+
+                    if (!(currentFragment instanceof StoreFront)) {
+                        fragment = new StoreFront();
+                        loadFragment(fragment);
+                    }
+
+
                     return true;
 
                 case R.id.navigation_cart:
@@ -78,7 +86,7 @@ public class MainActivity extends AppCompatActivity implements StoreFront.OnFrag
     private void loadFragment(Fragment fragment) {
         // load fragment
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.frame_container, fragment);
+        transaction.replace(R.id.frame_container, fragment,fragment.getClass().getSimpleName());
         transaction.addToBackStack(null);
         transaction.commit();
     }

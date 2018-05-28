@@ -1,6 +1,7 @@
 package com.tech.tle.posystemandroid.Fragments;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -22,11 +23,14 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.tech.tle.posystemandroid.Activities.ProductDetailActivity;
 import com.tech.tle.posystemandroid.Adapters.StoreAdapter;
 import com.tech.tle.posystemandroid.AppDatabase;
+import com.tech.tle.posystemandroid.Helper.ClickListener;
 import com.tech.tle.posystemandroid.Helper.GridSpacingItemDecoration;
 
 
+import com.tech.tle.posystemandroid.Helper.RecyclerTouchListener;
 import com.tech.tle.posystemandroid.Http.APIRequest;
 import com.tech.tle.posystemandroid.HttpModels.ProductResponse;
 import com.tech.tle.posystemandroid.Models.Product;
@@ -118,6 +122,19 @@ public class StoreFront extends Fragment {
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(mAdapter);
         recyclerView.setNestedScrollingEnabled(false);
+        recyclerView.addOnItemTouchListener(new RecyclerTouchListener(getActivity(), recyclerView, new ClickListener() {
+            @Override
+            public void onClick(View view, int position) {
+
+             startActivity(new Intent(getActivity(), ProductDetailActivity.class));
+
+            }
+
+            @Override
+            public void onLongClick(View view, int position) {
+
+            }
+        }));
 
         fetchStoreItems();
 
