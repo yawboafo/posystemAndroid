@@ -50,7 +50,7 @@
                 android:paddingRight="@dimen/card_title_padding"
                 android:textColor="#111"
                 android:textSize="11dp"
-                android:textStyle="bold" />
+                 />
 
             <TextView
 

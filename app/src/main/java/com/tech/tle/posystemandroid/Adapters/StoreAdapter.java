@@ -61,7 +61,7 @@ import java.util.List;
         @Override
         public void onBindViewHolder(MyViewHolder holder, final int position) {
 
-            final SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+            final SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS");
             final Product product = productList.get(position);
             holder.name.setText(product.getName());
             holder.price.setText(Application.AppCurrency+" "+product.getUnitPrice());
@@ -70,11 +70,12 @@ import java.util.List;
             Date date = null;
             try {
                 date = inputFormat.parse(dateStr);
+                String niceDateStr = DateUtils.getRelativeTimeSpanString(date.getTime() , Calendar.getInstance().getTimeInMillis(), DateUtils.MINUTE_IN_MILLIS).toString();
+                holder.time.setText(niceDateStr);
             } catch (ParseException e) {
                 e.printStackTrace();
             }
-            String niceDateStr = DateUtils.getRelativeTimeSpanString(date.getTime() , Calendar.getInstance().getTimeInMillis(), DateUtils.MINUTE_IN_MILLIS).toString();
-             holder.time.setText(niceDateStr);
+
             Glide.with(context)
                     .load(product.getImageUrl())
                     .into(holder.thumbnail);
