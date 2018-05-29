@@ -27,6 +27,8 @@ public interface ProductDao {
 
     @Delete
     void delete(Product... product);
+
+
     @Query("SELECT * FROM product")
     List<Product> getAllProducts();
 
@@ -35,5 +37,9 @@ public interface ProductDao {
 **/
     @Query("SELECT * FROM Product WHERE ProductID=:productID")
     Product findProductByIDNow(final int productID);
+
+
+    @Query("SELECT * FROM Product WHERE CategoryID=:categoryID")
+    List<Product> getAllProductByCategory(final int categoryID);
 
 }

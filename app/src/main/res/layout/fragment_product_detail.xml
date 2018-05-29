@@ -24,8 +24,8 @@
 
         app:fixMenuPadding="true"
         app:layout_scrollFlags="scroll|exitUntilCollapsed"
-        app:subtitle="Papua, Indonesia"
-        app:title="Raja Ampat">
+        app:subtitle=""
+        app:title="">
 
         <ImageView
             android:id="@+id/coverImage"
@@ -89,15 +89,18 @@
 
         <RelativeLayout
             android:layout_below="@+id/PDcardVTop"
-            android:background="@android:color/holo_red_dark"
             android:id="@+id/PDbottomLayout"
             android:layout_width="match_parent"
             android:layout_height="250dp">
 
 
             <android.support.v7.widget.RecyclerView
+
+                android:id="@+id/PDrecycleView"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="250dp"
+                android:clipToPadding="false"
+                android:scrollbars="horizontal">
 
 
             </android.support.v7.widget.RecyclerView>

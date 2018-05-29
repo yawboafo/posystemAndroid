@@ -174,6 +174,7 @@ public class StoreFrontFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+        AppDatabase.destroyInstance();
     }
 
 
@@ -383,7 +384,6 @@ public class StoreFrontFragment extends Fragment {
         }
 
         protected Void doInBackground(Void... unused) {
-
             product = db.getProductDao().findProductByIDNow(Integer.valueOf(productID));
             return null;
         }
@@ -398,7 +398,7 @@ public class StoreFrontFragment extends Fragment {
             if(MemoryData.activeProduct != null)
                 startActivity(new Intent(getActivity(), ProductDetailActivity.class));
             else
-    Toast.makeText(getContext(),"Product is Empty",Toast.LENGTH_LONG).show();
+           Toast.makeText(getContext(),"Product is Empty",Toast.LENGTH_LONG).show();
 
 
         }
