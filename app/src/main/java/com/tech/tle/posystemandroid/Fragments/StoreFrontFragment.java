@@ -15,6 +15,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -33,6 +34,7 @@ import com.tech.tle.posystemandroid.Helper.GridSpacingItemDecoration;
 import com.tech.tle.posystemandroid.Helper.RecyclerTouchListener;
 import com.tech.tle.posystemandroid.Http.APIRequest;
 import com.tech.tle.posystemandroid.HttpModels.ProductResponse;
+import com.tech.tle.posystemandroid.Models.MemoryData;
 import com.tech.tle.posystemandroid.Models.Product;
 import com.tech.tle.posystemandroid.R;
 
@@ -128,7 +130,14 @@ public class StoreFrontFragment extends Fragment {
             @Override
             public void onClick(View view, int position) {
 
-             startActivity(new Intent(getActivity(), ProductDetailActivity.class));
+
+                String value,transType;
+                TextView id=(TextView)view.findViewById(R.id.productIDHiddenTextView);
+
+
+                if (!id.getText().toString().isEmpty())
+             new getProductAsync(id.getText().toString()).execute();
+             //startActivity(new Intent(getActivity(), ProductDetailActivity.class));
 
             }
 
@@ -343,6 +352,53 @@ public class StoreFrontFragment extends Fragment {
             }
 
 
+
+
+        }
+    }
+
+    class getProductAsync extends AsyncTask<Void, Void, Void>
+    {
+
+
+
+
+        Product product;
+
+        AppDatabase db = AppDatabase.getAppDatabase(getActivity());
+
+        String TAG = getClass().getSimpleName();
+
+        String productID ;
+
+        getProductAsync(String productID){
+
+            this.productID = productID;
+
+        }
+
+        protected void onPreExecute (){
+            super.onPreExecute();
+
+        }
+
+        protected Void doInBackground(Void... unused) {
+
+            product = db.getProductDao().findProductByIDNow(Integer.valueOf(productID));
+            return null;
+        }
+
+        protected void onProgressUpdate(Integer...a){
+
+        }
+
+        protected void onPostExecute(Void result) {
+
+            MemoryData.activeProduct = product;
+            if(MemoryData.activeProduct != null)
+                startActivity(new Intent(getActivity(), ProductDetailActivity.class));
+            else
+    Toast.makeText(getContext(),"Product is Empty",Toast.LENGTH_LONG).show();
 
 
         }

@@ -3,11 +3,15 @@ package com.tech.tle.posystemandroid.Fragments;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.SubtitleCollapsingToolbarLayout;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
+import com.tech.tle.posystemandroid.Models.MemoryData;
 import com.tech.tle.posystemandroid.R;
 
 /**
@@ -29,7 +33,8 @@ public class ProductDetailFragment extends Fragment {
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
-
+    private SubtitleCollapsingToolbarLayout subtitleCollapsingToolbarLayout;
+    private ImageView coverImage;
     public ProductDetailFragment() {
         // Required empty public constructor
     }
@@ -65,7 +70,22 @@ public class ProductDetailFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_product_detail, container, false);
+        View view = inflater.inflate(R.layout.fragment_product_detail, container, false);
+
+        subtitleCollapsingToolbarLayout = view.findViewById(R.id.toolbarLayout);
+        coverImage = view.findViewById(R.id.coverImage);
+
+
+        if(MemoryData.activeProduct!=null)
+            subtitleCollapsingToolbarLayout.setTitle(MemoryData.activeProduct.getName());
+        subtitleCollapsingToolbarLayout.setSubtitle("GHS "+MemoryData.activeProduct.getUnitPrice());
+
+        Glide.with(getActivity())
+                .load(MemoryData.activeProduct.getImageUrl())
+                .into(coverImage);
+
+        return  view;
+       // return inflater.inflate(R.layout.fragment_product_detail, container, false);
     }
 
     // TODO: Rename method, update argument and hook method into UI event

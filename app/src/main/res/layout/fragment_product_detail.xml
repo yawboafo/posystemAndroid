@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-xmlns:app="http://schemas.android.com/apk/res-auto"
-xmlns:tools="http://schemas.android.com/tools"
-android:layout_width="match_parent"
-android:layout_height="match_parent"
-android:fitsSystemWindows="true"
-tools:context=".Activities.ProductDetailActivity"
-tools:ignore="ContentDescription">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:fitsSystemWindows="true"
+    tools:context=".Activities.ProductDetailActivity"
+    tools:ignore="ContentDescription">
 
 <android.support.design.widget.AppBarLayout
     android:id="@+id/appbarLayout"
@@ -17,15 +18,17 @@ tools:ignore="ContentDescription">
     <android.support.design.widget.SubtitleCollapsingToolbarLayout
         android:id="@+id/toolbarLayout"
         android:layout_width="match_parent"
-        android:layout_height="256dp"
+        android:layout_height="270dp"
         android:fitsSystemWindows="true"
         app:contentScrim="?colorPrimary"
+
         app:fixMenuPadding="true"
         app:layout_scrollFlags="scroll|exitUntilCollapsed"
         app:subtitle="Papua, Indonesia"
         app:title="Raja Ampat">
 
         <ImageView
+            android:id="@+id/coverImage"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:fitsSystemWindows="true"
@@ -56,21 +59,40 @@ tools:ignore="ContentDescription">
             android:text="Product Details should be here"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
-        <RelativeLayout
-            android:id="@+id/PDtopLayout"
+
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/PDcardVTop"
             android:layout_width="match_parent"
-            android:layout_height="300dp">
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="@dimen/card_margin"
+            android:clickable="true"
+            android:elevation="3dp"
+            android:foreground="?attr/selectableItemBackground"
+            card_view:cardCornerRadius="@dimen/card_album_radius"
+            >
+            <RelativeLayout
+                android:id="@+id/PDtopLayout"
+                android:layout_width="match_parent"
+                android:layout_height="250dp">
 
 
 
-        </RelativeLayout>
+            </RelativeLayout>
+
+
+        </android.support.v7.widget.CardView>
+
+
+
 
         <RelativeLayout
-            android:layout_below="@+id/PDtopLayout"
+            android:layout_below="@+id/PDcardVTop"
             android:background="@android:color/holo_red_dark"
             android:id="@+id/PDbottomLayout"
             android:layout_width="match_parent"
-            android:layout_height="200dp">
+            android:layout_height="250dp">
 
 
             <android.support.v7.widget.RecyclerView
@@ -92,7 +114,7 @@ tools:ignore="ContentDescription">
     android:id="@+id/button"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_margin="16dp"
+    android:layout_margin="18dp"
 
     android:src="@android:drawable/ic_input_add"
     app:fabSize="normal"

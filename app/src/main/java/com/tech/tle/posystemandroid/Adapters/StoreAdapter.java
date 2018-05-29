@@ -32,7 +32,7 @@ import java.util.List;
         private List<Product> productList;
 
         public class MyViewHolder extends RecyclerView.ViewHolder {
-            public TextView name, price,time;
+            public TextView name, price,time,id;
             public ImageView thumbnail;
 
             public MyViewHolder(View view) {
@@ -41,6 +41,7 @@ import java.util.List;
                 price = view.findViewById(R.id.price);
                 thumbnail = view.findViewById(R.id.thumbnail);
                 time = view.findViewById(R.id.time);
+                id = view.findViewById(R.id.productIDHiddenTextView);
             }
         }
 
@@ -67,7 +68,7 @@ import java.util.List;
             final Product product = productList.get(position);
             holder.name.setText(product.getName());
             holder.price.setText(Application.AppCurrency+" "+product.getUnitPrice());
-
+            holder.id.setText(""+product.getProductID());
             String dateStr = product.getDatecreated();
             Date date = null;
             try {
