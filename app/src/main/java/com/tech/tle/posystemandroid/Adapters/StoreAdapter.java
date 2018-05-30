@@ -30,6 +30,7 @@ import java.util.List;
    public class StoreAdapter extends RecyclerView.Adapter<StoreAdapter.MyViewHolder> {
         private Context context;
         private List<Product> productList;
+        private int mini;
 
         public class MyViewHolder extends RecyclerView.ViewHolder {
             public TextView name, price,time,id;
@@ -50,11 +51,20 @@ import java.util.List;
             this.context = context;
             this.productList = productList;
         }
+        public StoreAdapter(Context context, List<Product> productList,int mini) {
+        this.context = context;
+        this.productList = productList;
+        this.mini = mini;
 
+        }
         @Override
         public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            View itemView = LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.store_item_row, parent, false);
+            View itemView = null;
+            if(mini == 1)
+             itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.store_item_mini_row, parent, false);
+             else
+                itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.store_item_row, parent, false);
+
 
             return new MyViewHolder(itemView);
         }

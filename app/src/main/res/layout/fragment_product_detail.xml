@@ -27,7 +27,9 @@
         app:subtitle=""
         app:title="">
 
-        <ImageView
+
+
+       <ImageView
             android:id="@+id/coverImage"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -51,32 +53,75 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:padding="16dp"
-            android:text="Product Details should be here"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+
 
 
 
         <android.support.v7.widget.CardView
             android:id="@+id/PDcardVTop"
             android:layout_width="match_parent"
+            android:focusableInTouchMode="true"
+
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_margin="@dimen/card_margin"
-            android:clickable="true"
+
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:clickable="false"
             android:elevation="3dp"
+
             android:foreground="?attr/selectableItemBackground"
             card_view:cardCornerRadius="@dimen/card_album_radius"
             >
             <RelativeLayout
                 android:id="@+id/PDtopLayout"
+                android:background="@android:color/white"
                 android:layout_width="match_parent"
-                android:layout_height="250dp">
+                android:layout_height="200dp">
 
+
+                <RelativeLayout
+
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:paddingBottom="1dp"
+                    android:gravity="center">
+
+                  <!--  <com.beardedhen.androidbootstrap.BootstrapButton
+                        android:id="@+id/bootstrapButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginLeft="1dp"
+                        android:padding="5dp"
+                        app:bootstrapBrand="success"
+                        app:bootstrapSize="lg"
+                        app:bootstrapText="{fa-shopping-cart} Add to cart"
+                        app:buttonMode="regular"
+                        app:showOutline="false" />
+
+                    <com.beardedhen.androidbootstrap.BootstrapButton
+
+                        android:id="@+id/bootstrapButton2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginRight="1dp"
+                        android:padding="5dp"
+                        app:bootstrapBrand="success"
+                        app:bootstrapSize="lg"
+                        app:bootstrapText="{fa-shopping-cart} Place order"
+                        app:buttonMode="regular"
+                        app:roundedCorners="false"
+                        app:showOutline="false" /> -->
+                </RelativeLayout>
 
 
             </RelativeLayout>
@@ -85,20 +130,27 @@
         </android.support.v7.widget.CardView>
 
 
-
-
         <RelativeLayout
-            android:layout_below="@+id/PDcardVTop"
             android:id="@+id/PDbottomLayout"
             android:layout_width="match_parent"
-            android:layout_height="250dp">
+            android:layout_height="match_parent"
+            android:layout_below="@+id/PDcardVTop">
 
+
+            <TextView
+                android:id="@+id/similarTXT"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:text="Similar Product" />
 
             <android.support.v7.widget.RecyclerView
 
                 android:id="@+id/PDrecycleView"
                 android:layout_width="match_parent"
                 android:layout_height="250dp"
+                android:layout_below="@+id/similarTXT"
+                android:layout_marginBottom="10dp"
                 android:clipToPadding="false"
                 android:scrollbars="horizontal">
 
@@ -113,15 +165,16 @@
     </RelativeLayout>
 </android.support.v4.widget.NestedScrollView>
 
-<android.support.design.widget.FloatingActionButton
+<!--<android.support.design.widget.FloatingActionButton
     android:id="@+id/button"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_margin="18dp"
-
-    android:src="@android:drawable/ic_input_add"
+    app:backgroundTint="@color/colorAccent"
+    android:tint="@android:color/white"
+    android:src="@drawable/ic_localphone"
     app:fabSize="normal"
     app:layout_anchor="@id/appbarLayout"
-    app:layout_anchorGravity="bottom|end" />
+    app:layout_anchorGravity="bottom|end" />-->
 
 </android.support.design.widget.CoordinatorLayout>
