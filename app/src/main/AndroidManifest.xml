@@ -23,7 +23,7 @@
         </activity>
         <activity android:name=".Activities.ProductDetailActivity"
             android:parentActivityName=".Activities.MainActivity" >
-            ></activity>
+            </activity>
     </application>
 
 </manifest>

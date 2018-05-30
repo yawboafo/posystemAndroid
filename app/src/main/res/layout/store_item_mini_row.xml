@@ -5,17 +5,18 @@
 
     <android.support.v7.widget.CardView
         android:id="@+id/card_view"
+        style="@style/CardView.Dark"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center"
         android:layout_margin="@dimen/card_margin"
         android:clickable="true"
-        android:elevation="3dp"
-        android:foreground="?attr/selectableItemBackground"
-        card_view:cardCornerRadius="@dimen/card_album_radius">
+        android:foreground="?attr/selectableItemBackground">
 
         <RelativeLayout
+
             android:layout_width="match_parent"
+            android:layout_marginBottom="20dp"
             android:layout_height="match_parent">
 
 
@@ -38,12 +39,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/thumbnail"
-                android:lines="2"
-                android:textStyle="bold"
-                android:paddingLeft="@dimen/card_title_padding"
-                android:paddingRight="@dimen/card_title_padding"
-                android:paddingTop="@dimen/card_title_padding"
-                android:textColor="@color/secondary_text"
+                android:layout_marginEnd="16dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="20dp"
+                android:lines="1"
+
+                android:text="Header Goes here"
+                android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+                android:textColor="@color/colorPrimaryTextDefaultMaterialLight"
                 android:textSize="14dp" />
 
             <TextView
@@ -51,9 +54,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/title"
+                android:layout_marginEnd="16dp"
+                android:layout_marginStart="16dp"
                 android:lines="1"
-                android:paddingLeft="@dimen/card_title_padding"
-                android:paddingRight="@dimen/card_title_padding"
+                android:text="GHS 5,000.00"
+
                 android:textColor="@color/primary_text"
                 android:textSize="12dp"
                 />

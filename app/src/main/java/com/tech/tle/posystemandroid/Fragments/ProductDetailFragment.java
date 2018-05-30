@@ -84,14 +84,21 @@ public class ProductDetailFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_product_detail, container, false);
 
-        subtitleCollapsingToolbarLayout = view.findViewById(R.id.toolbarLayout);
+       // subtitleCollapsingToolbarLayout = view.findViewById(R.id.toolbarLayout);
         coverImage = view.findViewById(R.id.coverImage);
         PDrecycleView = view.findViewById(R.id.PDrecycleView);
 
 
         itemsList = new ArrayList<>();
-        mAdapter = new StoreAdapter(getActivity(), itemsList);
+        mAdapter = new StoreAdapter(getActivity(), itemsList,1);
 
+        TextView productTitle = (TextView)view.findViewById(R.id.title);
+        TextView productPrice = (TextView)view.findViewById(R.id.price);
+        TextView productTime = (TextView)view.findViewById(R.id.price);
+
+
+        productTitle.setText(""+MemoryData.activeProduct.getName());
+        productPrice.setText("GHS "+MemoryData.activeProduct.getUnitPrice()+".00");
         //GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), ROWSCOUNT, GridLayoutManager.HORIZONTAL, false);
 
         RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(getActivity(), 1, GridLayoutManager.HORIZONTAL, false); //new GridLayoutManager(getActivity(), 2);
@@ -102,8 +109,11 @@ public class ProductDetailFragment extends Fragment {
         PDrecycleView.setNestedScrollingEnabled(false);
 
       //  if(MemoryData.activeProduct!=null) {
-            subtitleCollapsingToolbarLayout.setTitle(MemoryData.activeProduct.getName());
-            subtitleCollapsingToolbarLayout.setSubtitle("GHS " + MemoryData.activeProduct.getUnitPrice());
+           // subtitleCollapsingToolbarLayout.setTitle(MemoryData.activeProduct.getName());
+           // subtitleCollapsingToolbarLayout.setSubtitle("GHS " + MemoryData.activeProduct.getUnitPrice());
+           // subtitleCollapsingToolbarLayout.setTitleEnabled(false);
+           // subtitleCollapsingToolbarLayout.setc
+           // subtitleCollapsingToolbarLayout.setcollapseTitle
 
             Glide.with(getActivity())
                     .load(MemoryData.activeProduct.getImageUrl())

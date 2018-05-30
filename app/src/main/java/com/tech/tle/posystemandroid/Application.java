@@ -10,7 +10,7 @@ import android.text.TextUtils;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
-import com.beardedhen.androidbootstrap.TypefaceProvider;
+
 
 public class Application extends android.app.Application{
 
@@ -26,7 +26,7 @@ public class Application extends android.app.Application{
         super.onCreate();
         mInstance = this;
 
-        TypefaceProvider.registerDefaultIconSets();
+
 
     }
 

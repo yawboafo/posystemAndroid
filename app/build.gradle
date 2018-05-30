@@ -41,7 +41,7 @@ dependencies {
 
     compile 'com.hendraanggrian:collapsingtoolbarlayout-subtitle:27.1.0'
 
-    compile 'com.beardedhen:androidbootstrap:2.3.2'
+
 
 
 
