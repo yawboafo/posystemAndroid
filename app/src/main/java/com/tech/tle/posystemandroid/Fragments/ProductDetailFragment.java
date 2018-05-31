@@ -13,15 +13,20 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.bumptech.glide.Glide;
 import com.tech.tle.posystemandroid.Adapters.StoreAdapter;
 import com.tech.tle.posystemandroid.AppDatabase;
+import com.tech.tle.posystemandroid.Application;
 import com.tech.tle.posystemandroid.Helper.ClickListener;
 import com.tech.tle.posystemandroid.Helper.GridSpacingItemDecoration;
 import com.tech.tle.posystemandroid.Helper.RecyclerTouchListener;
+import com.tech.tle.posystemandroid.Helper.Utility;
 import com.tech.tle.posystemandroid.Models.MemoryData;
 import com.tech.tle.posystemandroid.Models.Product;
 import com.tech.tle.posystemandroid.R;
@@ -48,7 +53,7 @@ public class ProductDetailFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-
+   private int quantityCount;
     private OnFragmentInteractionListener mListener;
     private SubtitleCollapsingToolbarLayout subtitleCollapsingToolbarLayout;
     private ImageView coverImage;
@@ -94,26 +99,65 @@ public class ProductDetailFragment extends Fragment {
 
         TextView productTitle = (TextView)view.findViewById(R.id.title);
         TextView productPrice = (TextView)view.findViewById(R.id.price);
-        TextView productTime = (TextView)view.findViewById(R.id.price);
+        TextView productSupportText = (TextView)view.findViewById(R.id.supporting_text);
+        Button addCartutton = (Button)view.findViewById(R.id.action_button_1);
 
+
+        addCartutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+
+
+
+                MaterialDialog dialog =   new MaterialDialog.Builder(getActivity())
+                        .customView(R.layout.add_cart_layout, false)
+
+                        .positiveText("Add")
+                        .negativeText("Cancel")
+                        .show();
+
+                final View materialView = dialog.getCustomView();
+
+
+                TextView title_text = (TextView)materialView.findViewById(R.id.title);
+                TextView price_text = (TextView)materialView.findViewById(R.id.price);
+                TextView supporting_text = (TextView)materialView.findViewById(R.id.supporting_text);
+
+                final EditText valueNumber = (EditText)materialView.findViewById(R.id.numbervalue);
+                quantityCount=1;
+
+
+                title_text.setText(MemoryData.activeProduct.getName());
+
+
+                String price = Utility.formatDecimal(Double.valueOf(MemoryData.activeProduct.getUnitPrice()));
+                price_text.setText(Application.AppCurrency+ " " +price);
+              // supporting_text.setText("Total "+Application.AppCurrency+ " "+price + " x " + quantityCount + " = ");
+
+                valueNumber.setText(String.valueOf(quantityCount));
+
+
+            }
+        });
 
         productTitle.setText(""+MemoryData.activeProduct.getName());
-        productPrice.setText("GHS "+MemoryData.activeProduct.getUnitPrice()+".00");
-        //GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), ROWSCOUNT, GridLayoutManager.HORIZONTAL, false);
+
+        String price = Utility.formatDecimal(Double.valueOf(MemoryData.activeProduct.getUnitPrice()));
+        productPrice.setText(Application.AppCurrency+""+price);
+        if(MemoryData.activeProduct.getDescription().isEmpty()){
+            productSupportText.setText(getResources().getString(R.string.cehcek_out_instant_d));
+        }else{
+            productSupportText.setText(MemoryData.activeProduct.getDescription());
+        }
 
         RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(getActivity(), 1, GridLayoutManager.HORIZONTAL, false); //new GridLayoutManager(getActivity(), 2);
         PDrecycleView.setLayoutManager(mLayoutManager);
-        //PDrecycleView.addItemDecoration(new GridSpacingItemDecoration(1, dpToPx(2), true));
-        //PDrecycleView.setItemAnimator(new DefaultItemAnimator());
+
         PDrecycleView.setAdapter(mAdapter);
         PDrecycleView.setNestedScrollingEnabled(false);
 
-      //  if(MemoryData.activeProduct!=null) {
-           // subtitleCollapsingToolbarLayout.setTitle(MemoryData.activeProduct.getName());
-           // subtitleCollapsingToolbarLayout.setSubtitle("GHS " + MemoryData.activeProduct.getUnitPrice());
-           // subtitleCollapsingToolbarLayout.setTitleEnabled(false);
-           // subtitleCollapsingToolbarLayout.setc
-           // subtitleCollapsingToolbarLayout.setcollapseTitle
+
 
             Glide.with(getActivity())
                     .load(MemoryData.activeProduct.getImageUrl())

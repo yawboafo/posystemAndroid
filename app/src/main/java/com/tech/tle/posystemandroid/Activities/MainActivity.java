@@ -103,6 +103,13 @@ public class MainActivity extends AppCompatActivity implements
         transaction.commit();
     }
 
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        this.finish();
+    }
+
     @Override
     public void onFragmentInteraction(Uri uri) {
 

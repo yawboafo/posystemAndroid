@@ -12,6 +12,8 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.tech.tle.posystemandroid.Application;
+import com.tech.tle.posystemandroid.Helper.Utility;
+import com.tech.tle.posystemandroid.Models.MemoryData;
 import com.tech.tle.posystemandroid.Models.Product;
 import com.tech.tle.posystemandroid.R;
 
@@ -77,7 +79,8 @@ import java.util.List;
 
             final Product product = productList.get(position);
             holder.name.setText(product.getName());
-            holder.price.setText(Application.AppCurrency+" "+product.getUnitPrice());
+            String price = Utility.formatDecimal(Double.valueOf(product.getUnitPrice()));
+            holder.price.setText(Application.AppCurrency+""+price);
             holder.id.setText(""+product.getProductID());
             String dateStr = product.getDatecreated();
             Date date = null;
