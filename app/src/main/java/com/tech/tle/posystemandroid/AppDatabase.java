@@ -10,7 +10,9 @@ import android.os.AsyncTask;
 import android.support.annotation.Nullable;
 
 import com.tech.tle.posystemandroid.Models.Product;
+import com.tech.tle.posystemandroid.Models.ShoppingCart;
 import com.tech.tle.posystemandroid.ModelsDAO.ProductDao;
+import com.tech.tle.posystemandroid.ModelsDAO.ShoppingCartDAO;
 
 import java.util.List;
 
@@ -18,8 +20,8 @@ import java.util.List;
  * Created by smsgh on 28/05/2018.
  */
 
-@Database(entities = { Product.class },
-        version = 1)
+@Database(entities = { Product.class, ShoppingCart.class},
+        version = 2)
 
 public abstract class AppDatabase extends RoomDatabase {
 
@@ -40,7 +42,7 @@ public abstract class AppDatabase extends RoomDatabase {
     }
 
     public abstract ProductDao getProductDao();
-
+    public abstract ShoppingCartDAO getShoppingCartdDao();
 
 
 
