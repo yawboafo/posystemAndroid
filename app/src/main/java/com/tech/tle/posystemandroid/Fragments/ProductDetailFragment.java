@@ -4,6 +4,7 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.SubtitleCollapsingToolbarLayout;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -18,6 +19,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.bumptech.glide.Glide;
 import com.tech.tle.posystemandroid.Adapters.StoreAdapter;
@@ -29,6 +31,7 @@ import com.tech.tle.posystemandroid.Helper.RecyclerTouchListener;
 import com.tech.tle.posystemandroid.Helper.Utility;
 import com.tech.tle.posystemandroid.Models.MemoryData;
 import com.tech.tle.posystemandroid.Models.Product;
+import com.tech.tle.posystemandroid.Models.ShoppingCart;
 import com.tech.tle.posystemandroid.R;
 
 import java.util.ArrayList;
@@ -106,16 +109,35 @@ public class ProductDetailFragment extends Fragment {
         addCartutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-
-
-
                 MaterialDialog dialog =   new MaterialDialog.Builder(getActivity())
                         .customView(R.layout.add_cart_layout, false)
-
                         .positiveText("Add")
                         .negativeText("Cancel")
+                        .onPositive(new MaterialDialog.SingleButtonCallback() {
+                            @Override
+                            public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+
+
+                                if(quantityCount!=0){
+
+                                    ShoppingCart shoppingCart = new ShoppingCart();
+                                    shoppingCart.setProduct(MemoryData.activeProduct);
+                                    shoppingCart.setProductID(MemoryData.activeProduct.getProductID()+"");
+                                    shoppingCart.setQuantity(quantityCount);
+                                    shoppingCart.setTimeStamp(Utility.getCurrentTimeStamp());
+
+                                    Double total = MemoryData.activeProduct.getUnitPrice() + Double.parseDouble(quantityCount+"");
+                                    shoppingCart.setTotal(Double.parseDouble(total.toString()));
+                                    shoppingCart.setUserid(1+"");
+
+                                    new InsertCartAsync(shoppingCart).execute();
+
+
+                                }
+                            }
+                        })
                         .show();
+
 
                 final View materialView = dialog.getCustomView();
 
@@ -136,7 +158,7 @@ public class ProductDetailFragment extends Fragment {
               // supporting_text.setText("Total "+Application.AppCurrency+ " "+price + " x " + quantityCount + " = ");
 
                 valueNumber.setText(String.valueOf(quantityCount));
-
+                valueNumber.requestFocus();
 
             }
         });
@@ -257,4 +279,45 @@ public class ProductDetailFragment extends Fragment {
 
         }
     }
+
+    class InsertCartAsync extends AsyncTask<Void, Void, Void>
+    {
+
+        ShoppingCart ShoppingCart ;
+
+        InsertCartAsync(ShoppingCart ShoppingCart){
+
+            this.ShoppingCart = ShoppingCart;
+
+        }
+
+        String TAG = getClass().getSimpleName();
+
+        protected void onPreExecute (){
+            super.onPreExecute();
+
+        }
+
+        protected Void doInBackground(Void... unused) {
+
+
+
+
+            AppDatabase db = AppDatabase.getAppDatabase(getActivity());
+             db.getShoppingCartdDao().insert(ShoppingCart);
+
+
+            return null;
+        }
+
+        protected void onProgressUpdate(Integer...a){
+
+        }
+
+        protected void onPostExecute(Void result) {
+
+
+        }
+    }
+
 }

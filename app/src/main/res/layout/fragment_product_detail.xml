@@ -75,9 +75,9 @@
         </android.support.design.widget.CollapsingToolbarLayout>-->
 
         <android.support.design.widget.SubtitleCollapsingToolbarLayout
-            android:id="@+id/toolbarLayout"
+            android:id="@+id/subtitlecollapsingtoolbarlayout"
             android:layout_width="match_parent"
-            android:layout_height="270dp"
+            android:layout_height="200dp"
             android:fitsSystemWindows="true"
             app:contentScrim="?colorPrimary"
 
@@ -190,7 +190,7 @@
                     android:minWidth="0dp"
                     android:paddingStart="8dp"
                     android:paddingEnd="8dp"
-                    android:text="Add Cart"
+                    android:text="Add to cart"
                     android:textColor="@color/colorPrimaryDark"
                     app:layout_constraintTop_toBottomOf="@+id/supporting_text"
                     app:layout_constraintStart_toStartOf="parent"
