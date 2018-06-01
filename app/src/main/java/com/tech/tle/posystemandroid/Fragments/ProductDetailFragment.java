@@ -123,6 +123,9 @@ public class ProductDetailFragment extends Fragment {
                                     ShoppingCart shoppingCart = new ShoppingCart();
                                     shoppingCart.setProduct(MemoryData.activeProduct);
                                     shoppingCart.setProductID(MemoryData.activeProduct.getProductID()+"");
+
+                                    EditText valueNumber =  (EditText)dialog.getCustomView().findViewById(R.id.numbervalue);
+                                    quantityCount = Integer.parseInt(valueNumber.getText().toString());
                                     shoppingCart.setQuantity(quantityCount);
                                     shoppingCart.setTimeStamp(Utility.getCurrentTimeStamp());
 
@@ -303,8 +306,18 @@ public class ProductDetailFragment extends Fragment {
 
 
 
-            AppDatabase db = AppDatabase.getAppDatabase(getActivity());
-             db.getShoppingCartdDao().insert(ShoppingCart);
+             AppDatabase db = AppDatabase.getAppDatabase(getActivity());
+             ShoppingCart product1 = db.getShoppingCartdDao().findShoppingCartByProduct(ShoppingCart.getProductID());
+             if (product1 == null) {
+                 db.getShoppingCartdDao().insert(ShoppingCart);
+             } else {
+
+
+                 int previousQty = product1.getQuantity();
+
+                 ShoppingCart.setQuantity(ShoppingCart.getQuantity() + previousQty);
+                 db.getShoppingCartdDao().update(ShoppingCart);
+             }
 
 
             return null;
