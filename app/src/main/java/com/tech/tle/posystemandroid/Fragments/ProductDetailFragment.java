@@ -63,16 +63,16 @@ public class ProductDetailFragment extends Fragment {
     private RecyclerView PDrecycleView;
     private StoreAdapter mAdapter;
     private List<Product> itemsList;
+   private static Product activeproduct;
     public ProductDetailFragment() {
         // Required empty public constructor
     }
 
 
-    public static ProductDetailFragment newInstance(String param1, String param2) {
+    public static ProductDetailFragment newInstance(Product param1) {
         ProductDetailFragment fragment = new ProductDetailFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
+         activeproduct = param1;
         fragment.setArguments(args);
         return fragment;
     }
@@ -80,6 +80,7 @@ public class ProductDetailFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
@@ -117,19 +118,19 @@ public class ProductDetailFragment extends Fragment {
                             @Override
                             public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
 
-
-                                if(quantityCount!=0){
+                                EditText valueNumber =  (EditText)dialog.getCustomView().findViewById(R.id.numbervalue);
+                                if(!valueNumber.getText().toString().isEmpty() || Integer.valueOf(valueNumber.getText().toString()) >0){
 
                                     ShoppingCart shoppingCart = new ShoppingCart();
-                                    shoppingCart.setProduct(MemoryData.activeProduct);
-                                    shoppingCart.setProductID(MemoryData.activeProduct.getProductID()+"");
-
-                                    EditText valueNumber =  (EditText)dialog.getCustomView().findViewById(R.id.numbervalue);
+                                    shoppingCart.setProduct(activeproduct);
+                                    shoppingCart.setProductID(activeproduct.getProductID()+"");
+                                    shoppingCart.setName(activeproduct.getName());
+                                    //EditText valueNumber =  (EditText)dialog.getCustomView().findViewById(R.id.numbervalue);
                                     quantityCount = Integer.parseInt(valueNumber.getText().toString());
                                     shoppingCart.setQuantity(quantityCount);
                                     shoppingCart.setTimeStamp(Utility.getCurrentTimeStamp());
 
-                                    Double total = MemoryData.activeProduct.getUnitPrice() + Double.parseDouble(quantityCount+"");
+                                    Double total = activeproduct.getUnitPrice() * Double.parseDouble(quantityCount+"");
                                     shoppingCart.setTotal(Double.parseDouble(total.toString()));
                                     shoppingCart.setUserid(1+"");
 
@@ -153,10 +154,10 @@ public class ProductDetailFragment extends Fragment {
                 quantityCount=1;
 
 
-                title_text.setText(MemoryData.activeProduct.getName());
+                title_text.setText(activeproduct.getName());
 
 
-                String price = Utility.formatDecimal(Double.valueOf(MemoryData.activeProduct.getUnitPrice()));
+                String price = Utility.formatDecimal(Double.valueOf(activeproduct.getUnitPrice()));
                 price_text.setText(Application.AppCurrency+ " " +price);
               // supporting_text.setText("Total "+Application.AppCurrency+ " "+price + " x " + quantityCount + " = ");
 
@@ -166,14 +167,14 @@ public class ProductDetailFragment extends Fragment {
             }
         });
 
-        productTitle.setText(""+MemoryData.activeProduct.getName());
+        productTitle.setText(""+activeproduct.getName());
 
-        String price = Utility.formatDecimal(Double.valueOf(MemoryData.activeProduct.getUnitPrice()));
+        String price = Utility.formatDecimal(Double.valueOf(activeproduct.getUnitPrice()));
         productPrice.setText(Application.AppCurrency+""+price);
-        if(MemoryData.activeProduct.getDescription().isEmpty()){
+        if(activeproduct.getDescription().isEmpty()){
             productSupportText.setText(getResources().getString(R.string.cehcek_out_instant_d));
         }else{
-            productSupportText.setText(MemoryData.activeProduct.getDescription());
+            productSupportText.setText(activeproduct.getDescription());
         }
 
         RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(getActivity(), 1, GridLayoutManager.HORIZONTAL, false); //new GridLayoutManager(getActivity(), 2);
@@ -185,12 +186,12 @@ public class ProductDetailFragment extends Fragment {
 
 
             Glide.with(getActivity())
-                    .load(MemoryData.activeProduct.getImageUrl())
+                    .load(activeproduct.getImageUrl())
                     .into(coverImage);
 
 
-            Log.d("ActiveProduct","activeP category ID " + MemoryData.activeProduct.getCategoryID());
-            new getAllProductByCategoryAsync(MemoryData.activeProduct.getCategoryID()).execute();
+            Log.d("ActiveProduct","activeP category ID " + activeproduct.getCategoryID());
+            new getAllProductByCategoryAsync(activeproduct.getCategoryID()).execute();
        // }
         return  view;
        // return inflater.inflate(R.layout.fragment_product_detail, container, false);
@@ -288,9 +289,9 @@ public class ProductDetailFragment extends Fragment {
 
         ShoppingCart ShoppingCart ;
 
-        InsertCartAsync(ShoppingCart ShoppingCart){
+        InsertCartAsync(ShoppingCart shoppingCart){
 
-            this.ShoppingCart = ShoppingCart;
+            this.ShoppingCart = shoppingCart;
 
         }
 
@@ -307,16 +308,20 @@ public class ProductDetailFragment extends Fragment {
 
 
              AppDatabase db = AppDatabase.getAppDatabase(getActivity());
-             ShoppingCart product1 = db.getShoppingCartdDao().findShoppingCartByProduct(ShoppingCart.getProductID());
+             ShoppingCart product1 = db.getShoppingCartdDao().findShoppingCartByName(ShoppingCart.getName());
              if (product1 == null) {
+                 Log.d("Found shopCART","FOUND Nothing ");
+
                  db.getShoppingCartdDao().insert(ShoppingCart);
              } else {
 
 
-                 int previousQty = product1.getQuantity();
+                 Log.d("Found shopCART","FOUND SOMETHING "+product1.getName() +" Quantity Previos : "+product1.getQuantity() + "Quantity new to add : "+ShoppingCart.getQuantity());
 
-                 ShoppingCart.setQuantity(ShoppingCart.getQuantity() + previousQty);
-                 db.getShoppingCartdDao().update(ShoppingCart);
+                 int previousQty = ShoppingCart.getQuantity() + product1.getQuantity();
+
+                 product1.setQuantity( previousQty);
+                 db.getShoppingCartdDao().update(product1);
              }
 
 

@@ -21,7 +21,7 @@ import java.util.List;
  */
 
 @Database(entities = { Product.class, ShoppingCart.class},
-        version = 2)
+        version = 3)
 
 public abstract class AppDatabase extends RoomDatabase {
 

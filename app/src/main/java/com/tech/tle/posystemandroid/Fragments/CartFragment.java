@@ -22,6 +22,7 @@ import com.tech.tle.posystemandroid.Models.ShoppingCart;
 import com.tech.tle.posystemandroid.R;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -76,7 +77,8 @@ public class CartFragment extends Fragment {
 
         recyclerView = view.findViewById(R.id.recycler_view);
         itemsList = new ArrayList<>();
-
+//        itemsList.addAll( MemoryData.activeShoppingCart);
+     //   mAdapter.notifyDataSetChanged();
 
 
         if(MemoryData.activeShoppingCart == null)
@@ -140,6 +142,7 @@ public class CartFragment extends Fragment {
 
         protected void onPreExecute (){
             super.onPreExecute();
+            MemoryData.activeShoppingCart = Collections.emptyList();
 
         }
 
