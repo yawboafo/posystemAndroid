@@ -35,6 +35,8 @@ public interface ShoppingCartDAO
     @Query("SELECT * FROM shoppingCart WHERE productID=:productID")
     ShoppingCart findShoppingCartByProduct(final String productID);
 
+    @Query("SELECT * FROM shoppingCart WHERE Name=:productName")
+    ShoppingCart findShoppingCartByName(final String productName);
 
 
     @Query("SELECT * FROM shoppingCart WHERE productID=:productID")

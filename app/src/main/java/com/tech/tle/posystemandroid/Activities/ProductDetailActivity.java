@@ -36,7 +36,7 @@ public class ProductDetailActivity extends AppCompatActivity implements ProductD
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product_detail);
         //getSupportActionBar().setDisplayShowTitleEnabled(false);
-        ProductDetailFragment productDetailFragment = new ProductDetailFragment();
+        ProductDetailFragment productDetailFragment = new ProductDetailFragment().newInstance(MemoryData.getActiveProduct());
         ViewUtils.loadFragment(ProductDetailActivity.this,productDetailFragment);
 
 

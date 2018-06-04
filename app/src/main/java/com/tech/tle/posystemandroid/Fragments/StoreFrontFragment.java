@@ -385,6 +385,7 @@ public class StoreFrontFragment extends Fragment {
 
         protected Void doInBackground(Void... unused) {
             product = db.getProductDao().findProductByIDNow(Integer.valueOf(productID));
+            MemoryData.setActiveProduct(product);
             return null;
         }
 
@@ -394,8 +395,8 @@ public class StoreFrontFragment extends Fragment {
 
         protected void onPostExecute(Void result) {
 
-            MemoryData.activeProduct = product;
-            if(MemoryData.activeProduct != null)
+           // MemoryData.activeProduct = product;
+            if(MemoryData.getActiveProduct() != null)
                 startActivity(new Intent(getActivity(), ProductDetailActivity.class));
             else
            Toast.makeText(getContext(),"Product is Empty",Toast.LENGTH_LONG).show();
