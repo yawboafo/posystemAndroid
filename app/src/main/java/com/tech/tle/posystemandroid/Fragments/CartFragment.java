@@ -4,10 +4,13 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -64,6 +67,20 @@ public class CartFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
+       // new getAllCartItemsAsync().execute();
+    }
+
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+
+        itemsList.addAll(MemoryData.getActiveShoppingCart());
+        mAdapter.notifyDataSetChanged();
+
+        Log.d("View status","View was created ");
     }
 
     @Override
@@ -74,6 +91,10 @@ public class CartFragment extends Fragment {
 
 
         View view = inflater.inflate(R.layout.fragment_cart, container, false);
+
+
+
+
 
         recyclerView = view.findViewById(R.id.recycler_view);
         itemsList = new ArrayList<>();
@@ -91,7 +112,7 @@ public class CartFragment extends Fragment {
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(mAdapter);
         recyclerView.setNestedScrollingEnabled(false);
-
+        Log.d("View status","View was create ");
         new getAllCartItemsAsync().execute();
 
         return  view;
@@ -117,6 +138,9 @@ public class CartFragment extends Fragment {
             throw new RuntimeException(context.toString()
                     + " must implement OnFragmentInteractionListener");
         }
+
+
+        Log.d("View status","View was attached ");
     }
 
     @Override
@@ -149,7 +173,7 @@ public class CartFragment extends Fragment {
         protected Void doInBackground(Void... unused) {
 
             products = db.getShoppingCartdDao().getAllShoppingCarts();
-            MemoryData.activeShoppingCart = products;
+            MemoryData.setActiveShoppingCart(products);
             return null;
         }
 
@@ -162,7 +186,7 @@ public class CartFragment extends Fragment {
 
 
                 itemsList.clear();
-                itemsList.addAll( MemoryData.activeShoppingCart);
+                itemsList.addAll(products);
                 mAdapter.notifyDataSetChanged();
 
 

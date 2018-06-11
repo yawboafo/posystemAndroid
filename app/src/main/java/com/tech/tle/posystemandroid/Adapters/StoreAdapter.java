@@ -76,7 +76,7 @@ import java.util.List;
         public void onBindViewHolder(MyViewHolder holder, final int position) {
 
 
-            final SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS");
+            final SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
 
             final Product product = productList.get(position);
             holder.name.setText(product.getName());
@@ -89,6 +89,7 @@ import java.util.List;
                 date = inputFormat.parse(dateStr);
                 String niceDateStr = DateUtils.getRelativeTimeSpanString(date.getTime() , Calendar.getInstance().getTimeInMillis(), DateUtils.MINUTE_IN_MILLIS).toString();
                 holder.time.setText(niceDateStr);
+                holder.time.setVisibility(View.GONE);
             } catch (ParseException e) {
                 e.printStackTrace();
             }

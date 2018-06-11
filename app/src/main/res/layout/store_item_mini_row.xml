@@ -73,6 +73,7 @@
                 android:layout_below="@id/price"
                 android:layout_marginRight="10dp"
                 android:gravity="right"
+                android:visibility="gone"
                 android:paddingBottom="@dimen/card_price_padding_bottom"
                 android:textColor="@android:color/holo_red_dark"
                 android:textSize="11dp"
