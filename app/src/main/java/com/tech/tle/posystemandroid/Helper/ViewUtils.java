@@ -31,5 +31,17 @@ public class ViewUtils {
     }
 
 
+    public static  void refreshFragment(Context context, Fragment fragment){
+
+        Fragment currentFragment =  ((FragmentActivity)context).getSupportFragmentManager().findFragmentByTag(fragment.getClass().getSimpleName());
+
+
+        FragmentTransaction fragmentTransaction = ((FragmentActivity)context).getSupportFragmentManager().beginTransaction();
+
+        fragmentTransaction.detach(currentFragment);
+        fragmentTransaction.attach(currentFragment);
+        fragmentTransaction.commit();
+    }
+
 
 }

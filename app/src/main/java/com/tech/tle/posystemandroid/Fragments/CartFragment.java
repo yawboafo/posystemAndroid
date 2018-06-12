@@ -14,11 +14,17 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
 
 import com.tech.tle.posystemandroid.Adapters.ShoppingCartAdapter;
 import com.tech.tle.posystemandroid.Adapters.StoreAdapter;
 import com.tech.tle.posystemandroid.AppDatabase;
+import com.tech.tle.posystemandroid.Application;
+import com.tech.tle.posystemandroid.Helper.ClickListener;
 import com.tech.tle.posystemandroid.Helper.GridSpacingItemDecoration;
+import com.tech.tle.posystemandroid.Helper.RecyclerTouchListener;
+import com.tech.tle.posystemandroid.Helper.Utility;
 import com.tech.tle.posystemandroid.Models.MemoryData;
 import com.tech.tle.posystemandroid.Models.Product;
 import com.tech.tle.posystemandroid.Models.ShoppingCart;
@@ -40,7 +46,8 @@ public class CartFragment extends Fragment {
     private RecyclerView recyclerView;
     private List<ShoppingCart> itemsList;
     private ShoppingCartAdapter mAdapter;
-
+    TextView textView ;
+    TextView textcount ;
     private String mParam1;
     private String mParam2;
 
@@ -91,29 +98,128 @@ public class CartFragment extends Fragment {
 
 
         View view = inflater.inflate(R.layout.fragment_cart, container, false);
-
-
-
-
-
         recyclerView = view.findViewById(R.id.recycler_view);
         itemsList = new ArrayList<>();
-//        itemsList.addAll( MemoryData.activeShoppingCart);
-     //   mAdapter.notifyDataSetChanged();
-
 
         if(MemoryData.activeShoppingCart == null)
-            MemoryData.activeShoppingCart = Collections.emptyList();
+            MemoryData.setActiveShoppingCart(Collections.<ShoppingCart>emptyList());
         mAdapter = new ShoppingCartAdapter(getActivity(), MemoryData.activeShoppingCart);
-
+        textView = (TextView)view.findViewById(R.id.title);
+        textcount = (TextView)view.findViewById(R.id.price);
         RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(getActivity(), 1);
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.addItemDecoration(new GridSpacingItemDecoration(2, dpToPx(2), true));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(mAdapter);
         recyclerView.setNestedScrollingEnabled(false);
+        recyclerView.addOnItemTouchListener(new RecyclerTouchListener(getActivity(), recyclerView, new ClickListener() {
+            @Override
+            public void onClick(final View view, int position) {
+
+               final TextView textView = (TextView)view.findViewById(R.id.quantity);
+               final int quantity = Integer.parseInt(textView.getText().toString());
+
+                Button incrementButton = (Button)view.findViewById(R.id.increment);
+                incrementButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        int newQuantity = quantity +1 ;
+                        TextView textView = (TextView)view.findViewById(R.id.quantity);
+                        textView.setText(""+newQuantity);
+
+
+                        TextView hiddenID = (TextView)view.findViewById(R.id.productIDHiddenTextView);
+
+                            ShoppingCart shoppingCartM = null;
+
+                        for (ShoppingCart shoppingCart : MemoryData.getActiveShoppingCart()){
+
+
+                            if(shoppingCart.getId() == Integer.parseInt(hiddenID.getText().toString())){
+
+                                shoppingCartM = shoppingCart;
+                                shoppingCartM.setQuantity(newQuantity);
+
+                                return;
+
+                            }
+
+                        }
+
+
+                        new InsertCartAsync(shoppingCartM).execute();
+
+                    }
+                });
+
+
+
+                Button decrementButton = (Button)view.findViewById(R.id.decrement);
+                decrementButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        int newQuantity = quantity - 1 ;
+                        TextView textView = (TextView)view.findViewById(R.id.quantity);
+                        textView.setText(""+newQuantity);
+
+
+                        TextView hiddenID = (TextView)view.findViewById(R.id.productIDHiddenTextView);
+
+                        ShoppingCart shoppingCartM = null;
+
+                        for (ShoppingCart shoppingCart : MemoryData.getActiveShoppingCart()){
+
+
+                            if(shoppingCart.getId() == Integer.parseInt(hiddenID.getText().toString())){
+
+                                shoppingCartM = shoppingCart;
+                                shoppingCartM.setQuantity(newQuantity);
+
+                                return;
+
+
+                            }
+
+
+                        }
+
+
+
+
+                        new InsertCartAsync(shoppingCartM).execute();
+
+                    }
+                });
+
+            }
+
+            @Override
+            public void onLongClick(View view, int position) {
+
+            }
+        }));
         Log.d("View status","View was create ");
         new getAllCartItemsAsync().execute();
+
+
+        //price
+        Double total = 0.0;
+        int qty = 0;
+
+        for (ShoppingCart shoppingCart : MemoryData.getActiveShoppingCart()){
+
+            System.out.println(shoppingCart.getName());
+
+            total+=shoppingCart.getTotal();
+            qty+=shoppingCart.getQuantity();
+        }
+
+
+
+        textcount.setText("" + qty + " Item ");
+
+        textView.setText( Application.AppCurrency + " " + Utility.formatDecimal(total));
 
         return  view;
 
@@ -166,7 +272,7 @@ public class CartFragment extends Fragment {
 
         protected void onPreExecute (){
             super.onPreExecute();
-            MemoryData.activeShoppingCart = Collections.emptyList();
+           // MemoryData.activeShoppingCart = Collections.emptyList();
 
         }
 
@@ -191,9 +297,80 @@ public class CartFragment extends Fragment {
 
 
 
+            //price
+            Double total = 0.0;
+            int qty = 0;
+
+            for (ShoppingCart shoppingCart : MemoryData.getActiveShoppingCart()){
+
+                System.out.println(shoppingCart.getName());
+
+                total+=shoppingCart.getTotal();
+                qty+=shoppingCart.getQuantity();
+            }
+
+
+
+            textcount.setText("" + qty + " Item ");
+
+            textView.setText( Application.AppCurrency + " " + Utility.formatDecimal(total));
+
 
 
         }
     }
+    class InsertCartAsync extends AsyncTask<Void, Void, Void>
+    {
 
+        ShoppingCart ShoppingCart ;
+
+        InsertCartAsync(ShoppingCart shoppingCart){
+
+            this.ShoppingCart = shoppingCart;
+
+        }
+
+        String TAG = getClass().getSimpleName();
+
+        protected void onPreExecute (){
+            super.onPreExecute();
+
+        }
+
+        protected Void doInBackground(Void... unused) {
+
+
+
+
+            AppDatabase db = AppDatabase.getAppDatabase(getActivity());
+            ShoppingCart product1 = db.getShoppingCartdDao().findShoppingCartByName(ShoppingCart.getName());
+            if (product1 == null) {
+                Log.d("Found shopCART","FOUND Nothing ");
+
+                db.getShoppingCartdDao().insert(ShoppingCart);
+            } else {
+
+
+                Log.d("Found shopCART","FOUND SOMETHING "+product1.getName() +" Quantity Previos : "+product1.getQuantity() + "Quantity new to add : "+ShoppingCart.getQuantity());
+
+                int previousQty = ShoppingCart.getQuantity() + product1.getQuantity();
+
+                product1.setQuantity( previousQty);
+                db.getShoppingCartdDao().update(product1);
+            }
+
+
+            return null;
+        }
+
+        protected void onProgressUpdate(Integer...a){
+
+        }
+
+        protected void onPostExecute(Void result) {
+
+           // new getAllCartItemsAsync().execute();
+
+        }
+    }
 }

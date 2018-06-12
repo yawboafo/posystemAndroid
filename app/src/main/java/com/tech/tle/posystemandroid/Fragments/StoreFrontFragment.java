@@ -41,7 +41,9 @@ import com.tech.tle.posystemandroid.R;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static com.tech.tle.posystemandroid.Helper.ViewUtils.dpToPx;
 
@@ -189,9 +191,11 @@ public class StoreFrontFragment extends Fragment {
 
     private void fetchStoreItems() {
 
+        Map<String, Integer> params = new HashMap();
+        params.put("organization_id", 82);
 
 
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, APIRequest.getProductURL, null,
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, APIRequest.getProductURL, new JSONObject(params),
                 new Response.Listener<JSONObject>()
                 {
 

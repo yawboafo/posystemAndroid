@@ -6,8 +6,10 @@ import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.tech.tle.posystemandroid.Application;
@@ -30,6 +32,7 @@ public class ShoppingCartAdapter extends RecyclerView.Adapter<ShoppingCartAdapte
     public class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView name, price,quantity,id;
         public ImageView thumbnail;
+        public Button increment,decrement;
 
         public MyViewHolder(View view) {
             super(view);
@@ -37,6 +40,8 @@ public class ShoppingCartAdapter extends RecyclerView.Adapter<ShoppingCartAdapte
             price = view.findViewById(R.id.price);
             thumbnail = view.findViewById(R.id.thumbnail);
             quantity = view.findViewById(R.id.quantity);
+            increment = view.findViewById(R.id.increment);
+            decrement = view.findViewById(R.id.decrement);
             id = view.findViewById(R.id.productIDHiddenTextView);
         }
     }
@@ -71,10 +76,13 @@ public class ShoppingCartAdapter extends RecyclerView.Adapter<ShoppingCartAdapte
 
         final ShoppingCart product = productList.get(position);
         holder.name.setText(product.getProduct().getName());
-       // String price = Utility.formatDecimal(Double.valueOf(product.getUnitPrice()));
-        holder.price.setText(Application.AppCurrency+" "+product.getTotal());
+        holder.price.setText(Application.AppCurrency+" "+Utility.formatDecimal(product.getTotal()));
         holder.id.setText(""+product.getId());
         holder.quantity.setText(""+product.getQuantity());
+
+
+
+
         String dateStr = product.getTimeStamp();
         Date date = null;
         try {

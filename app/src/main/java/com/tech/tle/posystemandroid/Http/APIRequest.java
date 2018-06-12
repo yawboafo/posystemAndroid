@@ -16,7 +16,7 @@ public class APIRequest {
 
 
    public static final String BASEURL = "https://posystemapi.herokuapp.com/";
-   public static String getProductURL = APIRequest.BASEURL + "getAllProducts";
+   public static String getProductURL = APIRequest.BASEURL + "getAllProductsByOrg";
 
 
     public static final String TAG = Application.class

@@ -60,6 +60,7 @@ public class MainActivity extends AppCompatActivity implements
                 case R.id.navigation_shop:
                     toolbar.setTitle("Store Front");
 
+
                     if (!(currentFragment instanceof StoreFrontFragment)) {
                         fragment = new StoreFrontFragment();
                         loadFragment(fragment);

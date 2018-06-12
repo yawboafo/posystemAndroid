@@ -1,6 +1,7 @@
 package com.tech.tle.posystemandroid.Fragments;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -18,10 +19,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.bumptech.glide.Glide;
+import com.tech.tle.posystemandroid.Activities.ProductDetailActivity;
 import com.tech.tle.posystemandroid.Adapters.StoreAdapter;
 import com.tech.tle.posystemandroid.AppDatabase;
 import com.tech.tle.posystemandroid.Application;
@@ -29,6 +32,7 @@ import com.tech.tle.posystemandroid.Helper.ClickListener;
 import com.tech.tle.posystemandroid.Helper.GridSpacingItemDecoration;
 import com.tech.tle.posystemandroid.Helper.RecyclerTouchListener;
 import com.tech.tle.posystemandroid.Helper.Utility;
+import com.tech.tle.posystemandroid.Helper.ViewUtils;
 import com.tech.tle.posystemandroid.Models.MemoryData;
 import com.tech.tle.posystemandroid.Models.Product;
 import com.tech.tle.posystemandroid.Models.ShoppingCart;
@@ -182,7 +186,22 @@ public class ProductDetailFragment extends Fragment {
 
         PDrecycleView.setAdapter(mAdapter);
         PDrecycleView.setNestedScrollingEnabled(false);
+        PDrecycleView.addOnItemTouchListener(new RecyclerTouchListener(getActivity(), PDrecycleView, new ClickListener() {
+        @Override
+        public void onClick(View view, int position) {
+            String value,transType;
+            TextView id=(TextView)view.findViewById(R.id.productIDHiddenTextView);
 
+
+            if (!id.getText().toString().isEmpty())
+                new getProductAsync(id.getText().toString()).execute();
+          }
+
+         @Override
+         public void onLongClick(View view, int position) {
+
+          }
+        }));
 
 
             Glide.with(getActivity())
@@ -333,6 +352,94 @@ public class ProductDetailFragment extends Fragment {
         }
 
         protected void onPostExecute(Void result) {
+
+           new getAllCartItemsAsync().execute();
+
+           }
+         }
+
+
+    class getAllCartItemsAsync extends AsyncTask<Void, Void, Void>
+    {
+
+        List<ShoppingCart> products;
+
+        AppDatabase db = AppDatabase.getAppDatabase(getActivity());
+
+        String TAG = getClass().getSimpleName();
+
+        protected void onPreExecute (){
+            super.onPreExecute();
+            // MemoryData.activeShoppingCart = Collections.emptyList();
+
+        }
+
+        protected Void doInBackground(Void... unused) {
+
+            products = db.getShoppingCartdDao().getAllShoppingCarts();
+            MemoryData.setActiveShoppingCart(products);
+            return null;
+        }
+
+        protected void onProgressUpdate(Integer...a){
+
+        }
+
+        protected void onPostExecute(Void result) {
+
+
+
+
+
+
+
+
+
+        }
+    }
+
+    class getProductAsync extends AsyncTask<Void, Void, Void>
+    {
+
+
+
+
+        Product product;
+
+        AppDatabase db = AppDatabase.getAppDatabase(getActivity());
+
+        String TAG = getClass().getSimpleName();
+
+        String productID ;
+
+        getProductAsync(String productID){
+
+            this.productID = productID;
+
+        }
+
+        protected void onPreExecute (){
+            super.onPreExecute();
+
+        }
+
+        protected Void doInBackground(Void... unused) {
+            product = db.getProductDao().findProductByIDNow(Integer.valueOf(productID));
+            MemoryData.setActiveProduct(product);
+            return null;
+        }
+
+        protected void onProgressUpdate(Integer...a){
+
+        }
+
+        protected void onPostExecute(Void result) {
+
+            //
+            ProductDetailFragment productDetailFragment = new ProductDetailFragment().newInstance(MemoryData.getActiveProduct());
+            ViewUtils.refreshFragment(getActivity(),productDetailFragment);
+
+               // Toast.makeText(getContext(),"Product is Empty",Toast.LENGTH_LONG).show();
 
 
         }
